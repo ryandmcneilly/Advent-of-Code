@@ -10,7 +10,6 @@ def solution(input: str):
     result = 0
     counter = 0
     for round in new:
-
         # Q1
         result += score.get(round[1])
         if ord(round[0]) - ord(round[1]) == -23:
@@ -28,5 +27,7 @@ def solution(input: str):
         else:
             counter += score.get(lose.get(round[0]))
 
+    # Q1
     print(result)
+    # Q2
     print(counter)
