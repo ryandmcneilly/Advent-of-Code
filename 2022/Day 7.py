@@ -1,10 +1,6 @@
-given = """"""
-
-
 def solution(raw: str):
     raw = raw.split("\n")
     directories = {"/": [0, [], ""]}
-    previous_directory = ""
     current_directory = "/"
 
     raw = raw[1:]
@@ -13,7 +9,7 @@ def solution(raw: str):
         line = raw[i]
         if line[:4] == "$ cd":
             if line[-2:] == "..":
-                pass
+                current_directory = directories[current_directory][2]
             else:
                 current_directory = line[5:]
 
@@ -22,12 +18,12 @@ def solution(raw: str):
             subline = raw[j]
             while j < len(raw) and subline[0] != "$":
                 subline = raw[j]
-                # Case dir
+                # Case new directory found
                 if subline[:3] == "dir":
                     directories[subline[4:]] = [0, [], current_directory]
                     directories[current_directory][1].append(subline[4:])
 
-                # Case mem
+                # Case file
                 if subline.split(" ")[0].isdigit():
                     directories[current_directory][0] += int(
                         subline.split(" ")[0])
@@ -37,8 +33,8 @@ def solution(raw: str):
 
     sums = [sum_directory(directories, x)
             for x in directories if sum_directory(directories, x) <= 100000]
-    print(directories)
-    print(len(sums))
+    # print(directories)
+    print(sum(sums))
 
 
 # Now have directories, need to sum
@@ -51,6 +47,3 @@ def sum_directory(directory: list, key: str):
         result += sum_directory(directory, i)
 
     return directory[key][0] + result
-
-
-solution(given)
