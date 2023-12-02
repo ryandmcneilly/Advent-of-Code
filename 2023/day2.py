@@ -1,3 +1,5 @@
+import numpy as np
+
 def read_input(dayNum, seperator='\n'):
     fileName = f"./day{dayNum}.in"
     inFile = open(fileName, 'r')
@@ -36,14 +38,8 @@ def main():
    
     # Biggest color value for each part
     data = [[max(xs, key=lambda x: x[0])[0], max(xs, key=lambda x: x[1])[1], max(xs, key=lambda x: x[2])[2]] for xs in data] 
-
-    data = [[xs[0] <= RED_LIMIT, xs[1] <= GREEN_LIMIT, xs[2] <= BLUE_LIMIT] for xs in data]
-
-    data = sum([idx + 1 for idx, xs in enumerate(data) if all(xs)])
-
-
     
-
+    data = sum([np.prod(xs) for xs in data]) 
 
     print(data)
 
